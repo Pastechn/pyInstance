@@ -21,7 +21,20 @@
 
 ## 说明
 
-在还原文件夹结构的步骤中，其实可以用 `os.makedirs()` 来自动递归创建文件夹。此处为了练习，并没有采用这个方法，而是将文件夹的层级拆分到一个列表中，再由外向内逐一使用 `os.mkdir()` 进行文件夹创建。
+在还原文件夹结构的步骤中，其实可以用 `os.makedirs()` 来自动递归创建文件夹。此处为了练习，并没有采用这个方法，而是将文件夹的层级拆分到一个列表中，再由外向内逐一使用 `os.mkdir()` 进行文件夹创建。在日志中可以看到，文件夹的创建是严格按顺序的，若文件夹已存在则交给 `except` 处理，日志中会显示 `[ER]` 类型的信息。
+
+```
+[IF] generating directories
+[OK] .\proto\proxy
+[OK] .\proto\proxy\http
+[OK] .\proto\transport
+[OK] .\proto\transport\internet
+[OK] .\proto\transport\internet\tcp
+[ER] .\proto\transport
+[ER] .\proto\transport\internet
+[OK] .\proto\transport\internet\headers
+[OK] .\proto\transport\internet\headers\utp
+```
 
 此脚本的创建初衷是想要自己编写一个和 V2board 对接的控制器，并使用 Xray 内置的 API 来修改配置文件。而 Xray 内置 API 使用了 gRPC 标准，因此得先根据 `.proto` 文件编译出 Python 适用的模块。
 
