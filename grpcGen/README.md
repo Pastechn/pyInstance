@@ -1,6 +1,6 @@
 # gRPC API for Python
 
-用于自动生成 Python 适用的 gRPC 模块
+用于根据 `.proto` 自动生成 Python 适用的 gRPC 模块
 
 ## 需求
 
@@ -25,4 +25,4 @@
 
 此脚本的创建初衷是想要自己编写一个和 V2board 对接的控制器，并使用 Xray 内置的 API 来修改配置文件。而 Xray 内置 API 使用了 gRPC 标准，因此得先根据 `.proto` 文件编译出 Python 适用的模块。
 
-理论上适用于任何项目的 .proto 自动编译。
+理论上适用于任何项目的 `.proto` 自动编译。
