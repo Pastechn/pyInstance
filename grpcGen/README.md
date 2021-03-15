@@ -8,11 +8,12 @@
 
 ## 使用方法
 
-1. 编辑脚本，将 `workDir` 修改为项目的根目录
-2. 运行脚本
-3. 生成的模块位于 `workDir/proto` 中
+1. 安装依赖 `pip3 install grpcio grpcio-tools`
+2. 编辑脚本，将 `workDir` 修改为项目的根目录
+3. 运行脚本
+4. 生成的模块位于 `workDir/proto` 中
 
-## 流程
+## 程序逻辑
 
 1. 寻找 `.proto` 文件
 2. 生成 `.py` 文件
@@ -35,6 +36,8 @@
 [OK] .\proto\transport\internet\headers
 [OK] .\proto\transport\internet\headers\utp
 ```
+
+日志部分原本使用了 `print()` 直接输出，现改为了使用 `Logger()` 实现（其实只是把原本的方法用面向对象的思维重写了）
 
 此脚本的创建初衷是想要自己编写一个和 V2board 对接的控制器，并使用 Xray 内置的 API 来修改配置文件。而 Xray 内置 API 使用了 gRPC 标准，因此得先根据 `.proto` 文件编译出 Python 适用的模块。
 
