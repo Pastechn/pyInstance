@@ -7,7 +7,17 @@ workDir = 'E:\\下载\\Xray-core-main'
 os.chdir(workDir)
 os.mkdir('proto')
 
-print('[IF] searching files')
+class Logger():
+    def __init__(self, messaege):
+        self.message = messaege
+    def info(self):
+        print('[IF]', self.message)
+    def error(self):
+        print('[ER]', self.message)
+    def ok(self):
+        print('[OK]', self.message)
+
+Logger.info(Logger('Searching files'))
 # 遍历文件夹，寻找 proto 文件
 allProtos = []
 for root, dirs, files in os.walk('.'):
@@ -16,16 +26,16 @@ for root, dirs, files in os.walk('.'):
             # 将文件名与相对目录拼接成完整的路径
             allProtos.append(os.path.join(root, single))
 
-print('[IF] generating files')
+Logger.info(Logger('Generating components'))
 # 逐一生成 py 文件
 for single in allProtos:
     try:
         os.system('python -m grpc_tools.protoc --python_out=. --grpc_python_out=. -I. ' + single)
-        print('[OK] ' + single)
+        Logger.ok(Logger(single))
     except:
-        print('[ER] ' + single)
+        Logger.error(Logger(single))
 
-print('[IF] searching generated files')
+Logger.info(Logger('Searching generated components'))
 # 遍历文件夹，寻找 py 文件
 allPys = []
 allDirs = set()
@@ -37,7 +47,7 @@ for root, dirs, files in os.walk('.'):
             # 将路径单独放入一个集合，便于生成文件夹结构
             allDirs.add(root)
 
-print('[IF] generating directories')
+Logger.info(Logger('Generating directories'))
 # 生成文件夹
 for single in allDirs:
     # 取出文件夹集合中的每个元素，并按照 \\ 劈分
@@ -54,9 +64,9 @@ for single in allDirs:
         # 创建文件夹，遇到重复或空元素则跳过
         try:
             os.mkdir(current)
-            print('[OK] ' + current)
+            Logger.ok(Logger(current))
         except:
-            print('[ER] ' + current)
+            Logger.error(Logger(current))
 
 newPys = []
 for single in allPys:
@@ -66,7 +76,7 @@ for single in allPys:
     dstPath = '\\'.join(dstList)
     newPys.append(dstPath)
 
-print('[IF] copying files')
+Logger.info(Logger('Cpoying files'))
 numPys = len(newPys)
 for num in range(0, numPys - 1):
     try:
@@ -74,6 +84,6 @@ for num in range(0, numPys - 1):
             content = srcFile.read()
             with open(newPys[num], 'w', encoding='utf-8') as dstFile:
                 dstFile.write(content)
-                print('[WT] ' + newPys[num])
+                Logger.ok(Logger(newPys[num]))
     except:
-        print('[ER] ' + newPys[num])
+        Logger.error(Logger(newPys[num]))
