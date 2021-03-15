@@ -56,7 +56,6 @@ for single in allDirs:
     numLayers = len(allLayers)
     if numLayers == 0:
         continue
-    cLayer = []
     current = '.\\proto'
     # 取出劈分后的单个元素，逐元素拼接，形成从外到里的文件夹结构
     for num in range(0, numLayers):
