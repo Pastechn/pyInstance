@@ -26,6 +26,6 @@
 
 ## 说明
 
-本实例参考自[简书]("https://www.jianshu.com/p/43fdfeb105ff?from=timeline&isappinstalled=0")，甚至可以说是直接照搬。
+本实例参考自[简书](https://www.jianshu.com/p/43fdfeb105ff?from=timeline&isappinstalled=0)，甚至可以说是直接照搬。
 
 本意是写一个 gRPC 通信的端口转发配置服务，其实已经完成得差不多了，如果有心的话直接在 `AlterForward()` 和 `RemoveForward()` 中加入IPtables代码就基本可以操作了，不过离完善还有很长的一段距离，得验证端口占用情况，以及转发的重复情况，等等。
