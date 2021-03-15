@@ -2,6 +2,7 @@
 import contact_pb2
 import contact_pb2_grpc
 import grpc
+import time
 from concurrent import futures
 
 # 定义服务端接受的方法，其实就是把 proto 文件中服务器对应的内容翻译一遍
@@ -15,6 +16,7 @@ from concurrent import futures
 class AlterForward(contact_pb2_grpc.AlterForwardServicer):
     # rpc AddForward(AddForwardRequest)
     def AddForward(self, request, context):
+        print(time.strftime("%H:%M:%S", time.localtime()) + ' [IF] add forward: {0}:{1}, from {2}'.format(request.address, str(request.port), request.token))
         # returns (AddForwardResponse)
         return contact_pb2.AddForwardResponse(
             # string message = 1;
@@ -22,6 +24,7 @@ class AlterForward(contact_pb2_grpc.AlterForwardServicer):
         )
     # rpc RemoveForward(RemoveForwardRequest)
     def RemoveForward(self,request,context):
+        print(time.strftime("%H:%M:%S", time.localtime()) + ' [IF] remove forward: {0}:{1}, from {2}'.format(request.address, str(request.port), request.token))
         # returns (RemoveForwardResponse)
         return contact_pb2.RemoveForwardResponse(
             # string message = 1;
@@ -38,8 +41,11 @@ def grpcServer():
     server.add_insecure_port('[::]:8500')
     # 启动服务器
     server.start()
-    print('[IF] Start listening 8500')
+    print(time.strftime("%H:%M:%S", time.localtime()) + ' [IF] Start listening 8500')
     server.wait_for_termination()
 
 # 启动 grpc 服务器
-grpcServer()
+try:
+    grpcServer()
+except:
+    print(time.strftime("%H:%M:%S", time.localtime()) + ' [IF] Server exits')
